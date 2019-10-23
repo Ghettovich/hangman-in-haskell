@@ -1,5 +1,6 @@
 drawStickFigure :: Int -> String
 drawStickFigure x = unlines $ case x of
+    0 -> ["=========", "|    |", "|   ", "|   ", "|   "]
     1 -> ["=========",
           "|    |",
           "|   " ++ " O ",
@@ -30,4 +31,4 @@ drawStickFigure x = unlines $ case x of
           "|   " ++ " | ",
           "|   " ++ "/ \\"]          
 
-main = putStr (drawStickFigure 6)
+main = putStr (drawStickFigure 0)
