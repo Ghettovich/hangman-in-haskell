@@ -37,28 +37,15 @@ drawStickFigure x = unlines $ case x of
           "|    |",
           "|   " ++ "_O_",
           "|   " ++ " | ",
-          "|   " ++ "/ \\"]  
+          "|   " ++ "/ \\"]
 
-displayState :: Hangman -> IO ()
-displayState (Hangman word' guesses' guessesLeft)  =
-    putStrLn $ (drawStickFigure guessesLeft) ++ unlines 
-            [ ""
-            ,"Word to guess: " ++ wordWithGuesses
-            , ""
-            , "Guesses: " ++ guesses'
-            , "Guesses left: " ++ show guessesLeft
-            ]
-    where
-        gameState = Hangman word' guesses' guessesLeft
-        wordWithGuesses = blankOrChar <$> word'        
-        blankOrChar c
-            | c `elem` guesses' = c
-            | otherwise = '_'
+displayState word' guesses' guessesLeft = do
+    let stickFig = drawStickFigure guessesLeft
+    let wordWithGuesses = map(\c -> if c `elem` guesses' then c else '_')
 
-newGame :: IO Hangman
-newGame = do
-    return $ Hangman randomWord [] maxGuesses
-        
-main :: IO ()
-main = do
-    newGame >>= displayState
+    putStrLn $ stickFig
+    putStrLn $ "Word to guess: " ++ wordWithGuesses word'
+    putStrLn $ "Guesses: " ++ guesses'
+    putStrLn $ "Guesses left: " ++ show guessesLeft
+
+main = putStr $ drawStickFigure 6
